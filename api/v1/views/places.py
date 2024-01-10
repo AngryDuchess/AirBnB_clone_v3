@@ -23,11 +23,11 @@ def city_places(city_id):
     if request.method == 'POST':
         data = request.get_json()
         if not data:
-            abort(404, 'Not a JSON')
+            abort(400, 'Not a JSON')
         if 'name' not in data:
-            abort(404, 'Missing name')
+            abort(400, 'Missing name')
         if 'user_id' not in data:
-            abort(404, 'Missing user_id')
+            abort(400, 'Missing user_id')
         user = storage.get(User, data.get('user_id'))
         if not user:
             abort(404)
