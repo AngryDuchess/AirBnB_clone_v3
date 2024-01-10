@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -90,7 +91,6 @@ class TestFileStorage(unittest.TestCase):
     # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """tests count method"""
-        storage = DBStorage()
         obj = State(name="Accra")
         obj.save()
         self.assertEqual(len(storage.all(State)), storage.count(State))
@@ -98,13 +98,11 @@ class TestFileStorage(unittest.TestCase):
     # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_all(self):
         """tests count all method"""
-        storage = DBStorage()
         self.assertEqual(len(storage.all()), storage.count())
 
     # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """tests get method"""
-        storage = DBStorage()
         obj = State(name="Accra")
         obj.save()
         self.assertIsNotNone(storage.get(State, obj.id))
@@ -113,5 +111,4 @@ class TestFileStorage(unittest.TestCase):
     # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_none(self):
         """tests get when no class is passed"""
-        storage = DBStorage()
         self.assertEqual(storage.get(State, 123), None)
